@@ -320,8 +320,11 @@ bin_PROGRAMS += \
 	src/tools/linux/dump_syms/dump_syms \
 	src/tools/linux/md2core/minidump-2-core \
 	src/tools/linux/symupload/minidump_upload \
-	src/tools/linux/symupload/sym_upload \
+	src/tools/linux/symupload/sym_upload
+if X86_HOST
+bin_PROGRAMS += \
 	src/tools/mac/dump_syms/dump_syms_mac
+endif
 endif
 endif LINUX_HOST
 
@@ -368,8 +371,11 @@ check_PROGRAMS += \
 if !DISABLE_TOOLS
 check_PROGRAMS += \
 	src/common/dumper_unittest \
-	src/common/mac/macho_reader_unittest \
 	src/tools/linux/md2core/minidump_2_core_unittest
+if X86_HOST
+check_PROGRAMS += \
+	src/common/mac/macho_reader_unittest
+endif
 endif
 endif LINUX_HOST
 

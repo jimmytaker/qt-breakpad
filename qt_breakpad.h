@@ -77,7 +77,7 @@ private:
                                  MDRawAssertionInfo* assertion,
                                  bool succeeded);
 #elif defined(Q_OS_LINUX)
-    static bool qMinidumpWrapper(const MinidumpDescriptor& descriptor,
+    static bool qMinidumpWrapper(const google_breakpad::MinidumpDescriptor& descriptor,
                                  QMinidumpContextWrapper* context,
                                  bool succeeded);
 #endif
