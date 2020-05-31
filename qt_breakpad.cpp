@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "qt_breakpad.h"
 
 QtBreakpad* QtBreakpad::_instance = NULL;
