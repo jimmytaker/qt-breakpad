@@ -7,8 +7,10 @@ void QtBreakpad::init(const QString& reportPath,
                       google_breakpad::ExceptionHandler::MinidumpCallback minidumpCallback,
                       void* callbackContext)
 {
+#if !defined(Q_OS_MACOS) || !defined(QT_DEBUG) //cannot start debugger with breakpad on mac
     QtBreakpad::replaceInstance(new QtBreakpad(reportPath, filterCallBack,
                                                minidumpCallback, callbackContext));
+#endif
 }
 
 void QtBreakpad::init(const QString& reportPath,
