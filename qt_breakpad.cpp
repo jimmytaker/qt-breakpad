@@ -7,7 +7,7 @@ void QtBreakpad::init(const QString& reportPath,
                       google_breakpad::ExceptionHandler::MinidumpCallback minidumpCallback,
                       void* callbackContext)
 {
-#if !defined(Q_OS_MACOS) || !defined(QT_DEBUG) //cannot start debugger with breakpad on mac
+#if !defined(Q_OS_IOS) && (!defined(Q_OS_MAC) || !defined(QT_DEBUG)) //cannot start debugger with breakpad on mac
     QtBreakpad::replaceInstance(new QtBreakpad(reportPath, filterCallBack,
                                                minidumpCallback, callbackContext));
 #endif
@@ -53,7 +53,7 @@ void QtBreakpad::buildBreakpadHandler(const QString& reportPath,
         true,
         -1
     );
-#elif defined(Q_OS_MACOS)
+#elif defined(Q_OS_MAC)
     std::string pathAsStr = reportPath.toStdString();
     this->_breakpad_handler = new google_breakpad::ExceptionHandler(
         pathAsStr,
@@ -93,7 +93,7 @@ bool QtBreakpad::qMinidumpWrapper(const google_breakpad::MinidumpDescriptor& des
                                   QMinidumpContextWrapper* contextWrapper,
                                   bool succeeded)
 {
-#elif defined(Q_OS_MACOS)
+#elif defined(Q_OS_MAC)
 bool QtBreakpad::qMinidumpWrapper(const char* dump_path,
                                   const char* minidump_id,
                                   QMinidumpContextWrapper* contextWrapper,
@@ -113,7 +113,7 @@ bool QtBreakpad::qMinidumpWrapper(const char* dump_path,
     minidumpFileName = minidumpDir.absoluteFilePath(QString::fromWCharArray(minidump_id) + ".dmp");
 #elif defined(Q_OS_LINUX)
     minidumpFileName = descriptor.path();
-#elif defined(Q_OS_MACOS)
+#elif defined(Q_OS_MAC)
     QDir minidumpDir = QDir(QString::fromLocal8Bit(dump_path));
     minidumpFileName = minidumpDir.absoluteFilePath(QString::fromLocal8Bit(minidump_id) + ".dmp");
 #endif
