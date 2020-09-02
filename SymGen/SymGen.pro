@@ -6,7 +6,11 @@ QT -= gui
 
 CONFIG += c++11
 
-TARGET = SymGen
+contains(QT_ARCH, i386) {
+    TARGET = SymGen32
+} else {
+    TARGET = SymGen64
+}
 CONFIG += console
 CONFIG -= app_bundle
 
